@@ -13,17 +13,17 @@ public class Client {
 
         Socket socket = new Socket(host, port);
         System.out.println("Connected to server on port: " + port);
+        String response;
 
-        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        try(PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-        String name = "Ildar"; // строка для отправки на сервер
-        out.println(name);
+            String name = "Ildar"; // строка для отправки на сервер
+            out.println(name);
 
-        String response = in.readLine();
-        System.out.println(response + " from server");
-
-        socket.close();
+            response = in.readLine();
+            System.out.println(response + " from server");
+        }
         System.out.println("Connection closed");
     }
 }
